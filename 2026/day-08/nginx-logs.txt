@@ -1,0 +1,66 @@
+Task to do:
+
+Launch a cloud instance (AWS EC2)
+Connect via SSH
+Install Nginx
+Configure security groups for web access (port 80 by default for nginx)
+Extract and save logs to a file
+Verify your webpage is accessible from the internet
+
+
+1. connection to the ec2 instance is done via ssh -i sample.pem ubuntu@ip_address
+2. sudo apt update
+ubuntu@ip-172-31-3-183:~$ sudo apt update
+Hit:1 http://ap-south-2.ec2.archive.ubuntu.com/ubuntu resolute InRelease
+Get:2 http://ap-south-2.ec2.archive.ubuntu.com/ubuntu resolute-updates InRelease [136 kB]
+Hit:3 http://ap-south-2.ec2.archive.ubuntu.com/ubuntu resolute-backports InRelease
+Get:4 http://ap-south-2.ec2.archive.ubuntu.com/ubuntu resolute-updates/main amd64 Components [9956 B]
+Get:5 http://ap-south-2.ec2.archive.ubuntu.com/ubuntu resolute-updates/universe amd64 Components [46.0 kB]
+Get:6 http://security.ubuntu.com/ubuntu resolute-security InRelease [136 kB]
+Get:7 http://security.ubuntu.com/ubuntu resolute-security/main amd64 Components [2844 B]
+Get:8 http://security.ubuntu.com/ubuntu resolute-security/universe amd64 Components [39.7 kB]
+Fetched 370 kB in 2s (228 kB/s)
+4 packages can be upgraded. Run 'apt list --upgradable' to see them.
+ubuntu@ip-172-31-3-183:~$ apt list --upgradable
+base-files/resolute-updates 14ubuntu6.1 amd64 [upgradable from: 14ubuntu6]
+distro-info-data/resolute-updates 0.68ubuntu0.1 all [upgradable from: 0.68build1]
+motd-news-config/resolute-updates 14ubuntu6.1 all [upgradable from: 14ubuntu6]
+snapd/resolute-updates 2.75.2+ubuntu26.04.2 amd64 [upgradable from: 2.74.1+ubuntu26.04.4]
+ubuntu@ip-172-31-3-183:~$
+
+
+3. Installation of nginx
+sudo apt install nginx
+
+4. check nginx status
+sudo systemctl status nginx
+
+5. checked in the internet running ip got error
+6. made changes in protocol from https to http : HTTP uses Port 80. Nginx is automatically configured to listen for traffic on Port 80 the moment we install it.
+
+7. for https the SSL certification have to add which runs on 443 and as we are not running anything on nginx so as security is nil.
+
+8. after one more changes need to be done which in security group of ec2 instance, where we define TCP port 80 to anywhere to communicate over internet
+
+9. web page opened successfully.
+
+10. now its time to look log
+sudo tail -n 20 /var/log/nginx/access.log
+
+ubuntu@ip-172-31-3-183:~$ sudo tail -n 20 /var/log/nginx/access.log
+152.59.6.248 - - [24/May/2026:15:30:51 +0000] "GET / HTTP/1.1" 200 409 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+152.59.6.248 - - [24/May/2026:15:30:51 +0000] "GET /favicon.ico HTTP/1.1" 404 197 "http://18.60.129.182/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+ubuntu@ip-172-31-3-183:~$
+
+11. save the logs 
+ubuntu@ip-172-31-3-183:~$ cp /var/log/nginx/access.log ~/nginx_logs/server_nginx.log
+ubuntu@ip-172-31-3-183:~$ l
+hello.txt*  nginx_logs/  notes.txt  server-b-key.pem  variable.sh*
+ubuntu@ip-172-31-3-183:~$ ls
+hello.txt  nginx_logs  notes.txt  server-b-key.pem  variable.sh
+ubuntu@ip-172-31-3-183:~$
+ubuntu@ip-172-31-3-183:~$ cat nginx_logs/server_nginx.log
+152.59.6.248 - - [24/May/2026:15:30:51 +0000] "GET / HTTP/1.1" 200 409 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, liko) Chrome/148.0.0.0 Safari/537.36"
+152.59.6.248 - - [24/May/2026:15:30:51 +0000] "GET /favicon.ico HTTP/1.1" 404 197 "http://18.60.129.182/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64eWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+152.59.6.131 - - [24/May/2026:16:24:44 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like) Chrome/148.0.0.0 Safari/537.36"
+ubuntu@ip-172-31-3-183:~$
