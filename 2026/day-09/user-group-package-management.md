@@ -1,75 +1,3 @@
-User Permission/Switch User:
-
-
-
-su root    -> su stands for switch user, but when we do it asks for password
-
-
-
-/etc/sudoers   -> this is file where, the rules are written who can do super user work
-
-
-
-sudo su -> it opens root folder
-
-whoami -> root
-
-
-
-how the ubuntu is user, like that we can create new user
-
-sudo useradd Tokyo   -> hear i kept username as Tokyo
-
-
-
-these new user will create home folder just like ubuntu
-
-sudo useradd -m Tokyo  -> -m creates folder in home directory -> this command helps to create user
-
-to switch user to Tokyo
-
-sudo su Tokyo,
-
-
-
-now we can do by 'adduser' command also, but it asks password we have to set it.
-
-sudo adduser berlin
-
-password:
-
-retype-password:
-
-once we set password we can switch through su command, neet to type password without sudo
-
-
-
-===========================26/5/2026=======================================
-
-how to list out users?
-
-cat /etc/passwd/
-
-
-
-sudo groupadd Japan
-
-
-
-sudo groupadd Japan
-
-
-
-sudo usermod -aG japan Tokyo
-
-
-
-
-
-cat /etc/group -> to check how many group are created
-
-
-
 =======================27/5/2026========================
 
 
@@ -104,7 +32,7 @@ sudo groupadd developer
 
 and i verified using command
 
-cat /etc/group  
+cat /etc/group
 
 
 
@@ -272,7 +200,7 @@ MacOS - brew
 
 i started doing
 
-sudo apt-get update 
+sudo apt-get update
 
 
 
@@ -280,7 +208,7 @@ It only downloads the latest list of available packages and their versions from 
 
 
 
-sudo apt-get upgrade 
+sudo apt-get upgrade
 
 
 
@@ -405,12 +333,6 @@ and the nginx file html file is present in
 /var/www/html
 
 &#x20;
-
-
-
-
-
-
 
 
 
