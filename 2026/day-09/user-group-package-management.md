@@ -70,7 +70,7 @@ cat /etc/group
 
 |-rw-rw-r--|1|ubuntu|ubuntu|0|May 27 14:24|hello.txt|
 |-|-|-|-|-|-|-|
-|file permission|inode|user|group|size of file in byte|creation date|file name|
+|file permission|Number of hard links|user|group|size of file in byte|creation date|file name|
 
 
 
@@ -333,6 +333,4 @@ and the nginx file html file is present in
 /var/www/html
 
 &#x20;
-
-
 
