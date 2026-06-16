@@ -1,0 +1,28 @@
+#----------------stage 1----------------------
+FROM node:24 AS builder
+
+#create dir inside  container
+WORKDIR /app
+
+#copy code from host to container
+COPY . .
+
+# install all required dependency
+RUN npm install
+
+#used to build the react code, which produces /dist folder
+RUN npm run build
+
+#------------stage 2--------------------------
+#smaller version of node
+FROM node:24-slim AS runner
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install -g vite
+
+COPY --from=builder /app/dist ./dist
+
+CMD ["npm","run","preview","--","--host","0.0.0.0","--port","5173"]
